@@ -1,0 +1,18 @@
+# test_junior
+Тестовое задание на позицию junior golang developer.
+
+Сделать ручку в которую нужно передать query параметр в формате YYYY-MM-DD.
+Вовзращаемое значение колво дней до наступления даты.
+Документация доступна по URL /docs
+
+Для запуска локально
+
+go run ./cmd/dater/main.go
+
+Для запуска тестов go test -v
+
+Для запуска в Docker
+
+docker build -t app:0.0.1 .
+
+docker run -p 8000:8000 app:0.0.1

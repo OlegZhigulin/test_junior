@@ -1,0 +1,125 @@
+openapi: 3.1.0
+info:
+  title: Test Junior API
+  description: API for test junior project
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: Hello endpoint
+      description: Returns a simple hello world message
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Hello, World!"
+
+  /docs:
+    get:
+      summary: API Documentation
+      description: Returns API documentation
+      responses:
+        "200":
+          description: Successful response
+
+  /info:
+    get:
+      summary: Service Information
+      description: Returns information about the service
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  about:
+                    type: string
+                  description:
+                    type: string
+                  stage:
+                    type: string
+                    example: "develop"
+                  startUpDatetime:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /healthcheck:
+    get:
+      summary: Health Check
+      description: Returns the health status of the service
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "OK"
+
+  /days:
+    get:
+      summary: Get Days Left
+      description: Calculates the number of days and hours left until a specified date
+      parameters:
+        - name: date
+          in: query
+          required: true
+          description: Target date in YYYY-MM-DD format
+          schema:
+            type: string
+            format: date
+            example: "2024-12-31"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "До 2024-12-31 осталось 300 дней и 12 часов"
+        "400":
+          description: Bad request - missing or invalid date parameter
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Параметр date обязателен в формате YYYY-MM-DD"
+
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [OK, Error]
+        error:
+          type: string
+        alias:
+          type: string
+      required:
+        - status
+
+    Request:
+      type: object
+      properties:
+        url:
+          type: string
+          format: url
+        alias:
+          type: string
+      required:
+        - url
